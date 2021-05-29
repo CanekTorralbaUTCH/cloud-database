@@ -2,10 +2,11 @@
 from flask_pymongo import pymongo
 import os
 
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_USER = os.getenv("dbUser")
+DB_PASSWORD = os.getenv("hydra111")
 DB_NAME = os.getenv("DB_NAME")
 
 
-client = pymongo.MongoClient(f"mongodb+srv://{DB_USER}:{DB_PASSWORD}@db-example.cr33o.mongodb.net/{DB_NAME}?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://{DB_USER}:{DB_PASSWORD}@cluster0.9unw3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+
 db = client.test
