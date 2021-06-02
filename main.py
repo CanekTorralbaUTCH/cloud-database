@@ -52,7 +52,7 @@ class AllBadge(Resource):
         pass 
 
 api.add_resource(Badge,'/new/','/<string:by>:<string:data>/')
-api.add_resource(Badge,'/all/','/delete/all/')
+api.add_resource(AllBadge,'/all/','/delete/all/')
 
-if __name__ == '__name__':
+if __name__ == '__main__':
     app.run(load_dotenv=True)
