@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask.wrappers import Response
 from flask_restful import Api, Resource
 from flask_pymongo import pymongo
 import db_config as database
@@ -6,6 +7,7 @@ import db_config as database
 #Resources
 from res.badge import Badge
 from res.badges import Badges
+from res.posts import Posts
 
 
 app=Flask(__name__)
@@ -31,10 +33,24 @@ def get_name_and_age():
 
 @app.route('/all/kids/')
 def get_kids():
-    pass
+    response = list(database.db.Badges.find({'age': {"$lt":21}}))
+    for document in response:
+        document["_id"] = str(document['_id'])
+    
+    return jsonify(response)
+
+@app.route('/all/user_names/')
+def get_all_names():
+    response = list(database.db.Badges.find({'name':1}))
+
+    for document in response:
+        document["_id"] = str(document['_id'])
+    
+    return jsonify(response)
 
 api.add_resource(Badge,'/new/','/<string:by>:<string:data>/')
 api.add_resource(Badges,'/all/','/delete/all/')
+api.add_resource(Posts, '/new/post/<string:_id>','/post/<string:_id>','/<string:_id>/<string:uuid>')
 
 if __name__ == '__main__':
     app.run(load_dotenv=True)
